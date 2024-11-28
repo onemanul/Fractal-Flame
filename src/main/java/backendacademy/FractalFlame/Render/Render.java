@@ -22,24 +22,18 @@ public abstract class Render {
             int iVar = random.nextInt(fractal.variations().length);
             point = fractal.coefficients()[i].transformPoint(point);
             point = fractal.variations()[iVar].apply(point);
-
-            if (j > 0 && point.inRange(X_MIN, X_MAX, Y_MIN, Y_MAX)) {
-                int x1 = image.width() - (int) ((X_MAX - point.x()) / (X_MAX - X_MIN) * image.width());
-                int y1 = image.height() - (int) ((Y_MAX - point.y()) / (Y_MAX - Y_MIN) * image.height());
-                if (image.contains(x1, y1)) {
-                    if (image.pixels()[y1][x1].getHits() == 0) {
-                        image.pixels()[y1][x1].red = fractal.coefficients()[i].red();
-                        image.pixels()[y1][x1].green = fractal.coefficients()[i].green();
-                        image.pixels()[y1][x1].blue = fractal.coefficients()[i].blue();
-                    } else {
-                        image.pixels()[y1][x1].red =
-                            (image.pixels()[y1][x1].red + fractal.coefficients()[i].red()) / 2;
-                        image.pixels()[y1][x1].green =
-                            (image.pixels()[y1][x1].green + fractal.coefficients()[i].green()) / 2;
-                        image.pixels()[y1][x1].blue =
-                            (image.pixels()[y1][x1].blue + fractal.coefficients()[i].blue()) / 2;
+            if (j > 0) {
+                double theta = 0;
+                for (int s = 0; s < fractal.symmetryParts(); s++) {
+                    if (point.inRange(X_MIN, X_MAX, Y_MIN, Y_MAX)) {
+                        int x1 = image.width() - (int) ((X_MAX - point.x()) / (X_MAX - X_MIN) * image.width());
+                        int y1 = image.height() - (int) ((Y_MAX - point.y()) / (Y_MAX - Y_MIN) * image.height());
+                        if (image.contains(x1, y1)) {
+                            image.pixels()[y1][x1] = fractal.coefficients()[i].hitPixel(image.pixels()[y1][x1]);
+                        }
                     }
-                    image.pixels()[y1][x1].increaseHit();
+                    theta += 2 * Math.PI / fractal.symmetryParts();
+                    point = rotate(point, theta);
                 }
             }
         }
@@ -50,5 +44,11 @@ public abstract class Render {
         double x = random.nextDouble(X_MIN, X_MAX);
         double y = random.nextDouble(Y_MIN, Y_MAX);
         return new Point(x, y);
+    }
+
+    protected static Point rotate(Point point, double theta) {
+        double xRotated = point.x() * Math.cos(theta) - point.y() * Math.sin(theta);
+        double yRotated = point.x() * Math.sin(theta) + point.y() * Math.cos(theta);
+        return new Point(xRotated, yRotated);
     }
 }

@@ -25,7 +25,7 @@ public class VariationsGetter {
         );
 
     private final static PrintStream OUTPUT = System.out;
-    static Scanner in = new Scanner("0"); // (System.in);
+    static Scanner in = new Scanner(System.in);
 
     public static Transformation[] get() {
         OUTPUT.println("Доступные вариации:");
@@ -56,10 +56,10 @@ public class VariationsGetter {
         List<Transformation> variations = new ArrayList<>();
         Random random = new Random();
         int numberOfVariations = random.nextInt(TRANSFORMATIONS.size()) + 1;
+        OUTPUT.println("Случайно выбранные вариации:");
         for (int i = 0; i < numberOfVariations; ++i) {
             int index = random.nextInt(TRANSFORMATIONS.size());
             variations.add(TRANSFORMATIONS.get(index));
-
             OUTPUT.println(TRANSFORMATIONS.get(index).getClass().getSimpleName());
         }
         return variations.toArray(new Transformation[0]);

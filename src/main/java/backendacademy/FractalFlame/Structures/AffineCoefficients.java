@@ -44,6 +44,17 @@ public record AffineCoefficients(
         return new Point(x, y);
     }
 
+    public Pixel hitPixel(Pixel pixel) {
+        if (pixel.hits() == 0) {
+            return new Pixel(this.red, this.green, this.blue, 1);
+        } else {
+            int newRed = (pixel.red() + this.red) / 2;
+            int newGreen = (pixel.green() + this.green) / 2;
+            int newBlue = (pixel.blue() + this.blue) / 2;
+            return new Pixel(newRed, newGreen, newBlue, pixel.hits() + 1);
+        }
+    }
+
     private static boolean coefficientsIsValid(double a, double b, double d, double e) {
         return (a * a + d * d < 1)
             && (b * b + e * e < 1)

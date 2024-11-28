@@ -6,7 +6,7 @@ public record FractalImage(Pixel[][] pixels, int width, int height) {
         Pixel[][] newData = new Pixel[height][width];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                newData[y][x] = new Pixel();
+                newData[y][x] = new Pixel(0, 0, 0, 0);
             }
         }
         return new FractalImage(newData, width, height);

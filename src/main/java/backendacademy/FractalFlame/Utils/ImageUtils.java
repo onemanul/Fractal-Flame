@@ -1,4 +1,4 @@
-package backendacademy.FractalFlame;
+package backendacademy.FractalFlame.Utils;
 
 import backendacademy.FractalFlame.Structures.FractalImage;
 import backendacademy.FractalFlame.Structures.Pixel;
@@ -24,7 +24,7 @@ public class ImageUtils {
         for (int y = 0; y < image.height(); ++y) {
             for (int x = 0; x < image.width(); ++x) {
                 Pixel pixel = image.pixels()[y][x];
-                Color color = new Color(pixel.red, pixel.green, pixel.blue);
+                Color color = new Color(pixel.red(), pixel.green(), pixel.blue());
                 bufferedImage.setRGB(x, y, color.getRGB());
             }
         }
