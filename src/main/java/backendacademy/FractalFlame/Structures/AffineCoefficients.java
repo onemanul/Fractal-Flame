@@ -14,21 +14,22 @@ public record AffineCoefficients(
     int green,
     int blue
 ) {
-    private final static int MAX_RGB_VALUE = 255;
-    private final static double RANGE = 1.5;
+    public final static int MAX_RGB_VALUE = 255;
+    public final static double RANGE_LINEAR = 1.5;
+    public final static double RANGE_SHIFT = 3.5;
 
     public static AffineCoefficients create() {
-        double a = randomValue(RANGE);
-        double b = randomValue(RANGE);
-        double c = randomValue(RANGE * 2);
-        double d = randomValue(RANGE);
-        double e = randomValue(RANGE);
-        double f = randomValue(RANGE * 2);
+        double a = randomValue(RANGE_LINEAR);
+        double b = randomValue(RANGE_LINEAR);
+        double c = randomValue(RANGE_SHIFT);
+        double d = randomValue(RANGE_LINEAR);
+        double e = randomValue(RANGE_LINEAR);
+        double f = randomValue(RANGE_SHIFT);
         while (!coefficientsIsValid(a, b, d, e)) {
-            a = randomValue(RANGE);
-            b = randomValue(RANGE);
-            d = randomValue(RANGE);
-            e = randomValue(RANGE);
+            a = randomValue(RANGE_LINEAR);
+            b = randomValue(RANGE_LINEAR);
+            d = randomValue(RANGE_LINEAR);
+            e = randomValue(RANGE_LINEAR);
         }
         Random random = new Random();
         return new AffineCoefficients(a, b, c, d, e, f,

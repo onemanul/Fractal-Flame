@@ -14,14 +14,20 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Scanner;
 import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.tuple.Pair;
+
+/**
+ * При небольших входных значениях генерации фрактального пламени (особенно при малом количестве итераций или точек)
+ * многопоточная реализация НЕ ВСЕГДА БЫСТРЕЕ однопоточной, а начиная с некоторых достаточно малых значений
+ * многопоточная реализация ВСЕГДА МЕДЛЕННЕЕ однопоточной. Используемые константы (в том числе минимальные)
+ * отсекают бОльшую часть таких случаев.
+ */
 
 @UtilityClass
 public class Main {
-    private static final int MIN_IMAGE_SIZE = 16;
+    private static final int MIN_IMAGE_SIZE = 100;
     private static final int MAX_WIDTH = 3840;
     private static final int MAX_HEIGHT = 2160;
-    private static final int MIN_ITERATIONS = 5;
+    private static final int MIN_ITERATIONS = 100;
     private static final int MAX_ITERATIONS = 100000;
     private static final int MAX_SYMMETRY_INDEX = 5;
     private static final int POINTS = 300;
@@ -48,28 +54,25 @@ public class Main {
         FractalStructure fractalMulti =
             FractalStructure.create(POINTS, iterations, EQ_COUNT, width, height, symmetryIndex, variations);
 
-        Pair<FractalImage, Long> imageTimeSingleThread = imageTimeSingleThread(fractalSingle);
-        ImageUtils.save(imageTimeSingleThread.getLeft(), ImageFormat.JPEG, PATH_FOR_IMAGE);
-        Pair<FractalImage, Long> imageTimeMultiThread = imageTimeMultiThread(fractalMulti);
-        ImageUtils.save(imageTimeMultiThread.getLeft(), ImageFormat.PNG, PATH_FOR_IMAGE);
+        FractalImage imageSingle = SingleThreaded.getFractalImage(fractalSingle);
+        FractalImage imageMulti = MultiThreaded.getFractalImage(fractalMulti);
+        ImageUtils.save(imageSingle, ImageFormat.JPEG, PATH_FOR_IMAGE);
+        ImageUtils.save(imageMulti, ImageFormat.PNG, PATH_FOR_IMAGE);
 
-        OUTPUT.println("Время при однопоточной генерации: " + imageTimeSingleThread.getRight()
+        FractalStructure fractal =
+            FractalStructure.create(POINTS, iterations, EQ_COUNT, width, height, symmetryIndex, variations);
+        Runnable single = () -> SingleThreaded.getFractalImage(fractal);
+        Runnable multi = () -> MultiThreaded.getFractalImage(fractal);
+        OUTPUT.println("Время при однопоточной генерации: " + getTime(single)
             + "\nВремя при многопоточной генерации (" + Runtime.getRuntime().availableProcessors() + " потоков): "
-            + imageTimeMultiThread.getRight());
+            + getTime(multi));
     }
 
-    public static Pair<FractalImage, Long> imageTimeSingleThread(FractalStructure fractal) {
+    public static long getTime(Runnable method) {
         long start = System.nanoTime();
-        FractalImage image = SingleThreaded.getFractalImage(fractal);
-        long time = System.nanoTime() - start;
-        return Pair.of(image, time);
-    }
-
-    public static Pair<FractalImage, Long> imageTimeMultiThread(FractalStructure fractal) {
-        long start = System.nanoTime();
-        FractalImage image = MultiThreaded.getFractalImage(fractal);
-        long time = System.nanoTime() - start;
-        return Pair.of(image, time);
+        method.run();
+        long end = System.nanoTime();
+        return end - start;
     }
 
     public static int correctIntInput(int min, int max) {

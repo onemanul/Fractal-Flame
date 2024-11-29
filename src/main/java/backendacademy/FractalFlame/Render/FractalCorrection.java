@@ -6,8 +6,8 @@ import backendacademy.FractalFlame.Structures.Pixel;
 public class FractalCorrection {
     private FractalCorrection() {}
 
-    private final static int MAX_RGB_VALUE = 255;
-    private final static double GAMMA = 2.2;
+    public final static int MAX_RGB_VALUE = 255;
+    public final static double GAMMA = 2.2;
 
     public static void correct(FractalImage image) {
         double max = 0.0;
