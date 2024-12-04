@@ -9,6 +9,7 @@ import backendacademy.FractalFlame.Transformations.VariationsGetter;
 import backendacademy.FractalFlame.Utils.ImageFormat;
 import backendacademy.FractalFlame.Utils.ImageUtils;
 import java.io.PrintStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -32,7 +33,7 @@ public class Main {
     private static final int MAX_SYMMETRY_INDEX = 5;
     private static final int POINTS = 300;
     private static final int EQ_COUNT = 20;                 // количество генерируемых афинных преобразований
-    private static final Path PATH_FOR_IMAGE = Paths.get("IMAGES");
+    public static final Path DEFAULT_PATH_FOR_IMAGE = Paths.get("IMAGES");
 
     private final static PrintStream OUTPUT = System.out;
     static Scanner in = new Scanner(System.in);             // "1000\n1000\n10000\n0\n"
@@ -47,6 +48,9 @@ public class Main {
         OUTPUT.println("Введите показатель симметрии (степень двойки, где 0 - без симметрии): "
             + segment(0, MAX_SYMMETRY_INDEX));
         int symmetryIndex = correctIntInput(0, MAX_SYMMETRY_INDEX);
+        OUTPUT.println("Укажите директорию для сохранения изображений (при вводе \"default\" они будут сохранены "
+            + "в папке \"" + DEFAULT_PATH_FOR_IMAGE + "\"): ");
+        Path pathForImage = correctPathInput();
         Transformation[] variations = VariationsGetter.get();
 
         FractalStructure fractalSingle =
@@ -56,8 +60,8 @@ public class Main {
 
         FractalImage imageSingle = SingleThreaded.getFractalImage(fractalSingle);
         FractalImage imageMulti = MultiThreaded.getFractalImage(fractalMulti);
-        ImageUtils.save(imageSingle, ImageFormat.JPEG, PATH_FOR_IMAGE);
-        ImageUtils.save(imageMulti, ImageFormat.PNG, PATH_FOR_IMAGE);
+        ImageUtils.save(imageSingle, ImageFormat.JPEG, pathForImage);
+        ImageUtils.save(imageMulti, ImageFormat.PNG, pathForImage);
 
         FractalStructure fractal =
             FractalStructure.create(POINTS, iterations, EQ_COUNT, width, height, symmetryIndex, variations);
@@ -90,6 +94,24 @@ public class Main {
         } catch (NumberFormatException e) {
             return Optional.empty();
         }
+    }
+
+    public static Path correctPathInput() {
+        String input = in.nextLine();
+        while (!input.equals("default")) {
+            try {
+                Path path = Paths.get(input);
+                if (Files.isDirectory(path)) {
+                    return path;
+                } else {
+                    OUTPUT.println("Введённый путь не является директорией. Введите директорию или \"default\"");
+                }
+            } catch (Exception e) {
+                OUTPUT.println("Путь введён неверно. Введите директорию или \"default\"");
+            }
+            input = in.nextLine();
+        }
+        return DEFAULT_PATH_FOR_IMAGE;
     }
 
     public static String segment(int min, int max) {

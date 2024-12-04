@@ -5,6 +5,8 @@ import backendacademy.FractalFlame.Render.SingleThreaded;
 import backendacademy.FractalFlame.Structures.FractalStructure;
 import backendacademy.FractalFlame.Transformations.VariationsGetter;
 import org.junit.jupiter.api.Test;
+import java.io.File;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,5 +67,14 @@ class MainTest {
         assertEquals("от 1 до 10", result);
         result = Main.segment(-5, 5);
         assertEquals("от -5 до 5", result);
+    }
+
+    @Test
+    void testCorrectPathInput() {
+        Main.in = new Scanner("qwerty\nqwe?rty\n**\nDeFaUlT\nsrc/main\ndefault\n");
+        Path test1 = Main.correctPathInput();
+        Path test2 = Main.correctPathInput();
+        assertEquals("src" + File.separatorChar + "main", test1.toString());
+        assertEquals(Main.DEFAULT_PATH_FOR_IMAGE, test2);
     }
 }
