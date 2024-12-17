@@ -7,29 +7,29 @@
 **Примеры сгенерированных изображений**
 
 <div style="display: flex; justify-content: center;">
-    <img src="IMAGES/Fractal_Flame_2024-11-27_23-31-41.PNG" width="500" />
-    <img src="IMAGES/Fractal_Flame_2024-12-18_00-51-29.JPEG" width="500" />
+    <img src="IMAGES/Fractal_Flame_2024-11-27_23-31-41.PNG" width="650" />
+    <img src="IMAGES/Fractal_Flame_2024-12-18_00-51-29.JPEG" width="650" />
 </div>
 <div style="display: flex; justify-content: center;">
-    <img src="IMAGES/Fractal_Flame_2024-12-18_00-39-54.JPEG" height="333" />
-    <img src="IMAGES/Fractal_Flame_2024-12-18_00-40-07.JPEG" height="333" />
-    <img src="IMAGES/Fractal_Flame_2024-12-18_00-43-34.JPEG" height="333" />
+    <img src="IMAGES/Fractal_Flame_2024-12-18_00-39-54.JPEG" height="450" />
+    <img src="IMAGES/Fractal_Flame_2024-12-18_00-40-07.JPEG" height="450" />
+    <img src="IMAGES/Fractal_Flame_2024-12-18_00-43-34.JPEG" height="450" />
 </div>
 <div style="display: flex; justify-content: center;">
-    <img src="IMAGES/Fractal_Flame_2024-12-11_15-58-17.JPEG" width="500" />
-    <img src="IMAGES/Fractal_Flame_2024-12-13_17-08-10.JPEG" width="500" />
+    <img src="IMAGES/Fractal_Flame_2024-12-11_15-58-17.JPEG" width="650" />
+    <img src="IMAGES/Fractal_Flame_2024-12-13_17-08-10.JPEG" width="650" />
 </div>
 <div style="display: flex; justify-content: center;">
-    <img src="IMAGES/Fractal_Flame_2024-12-11_16-01-13.JPEG" width="500" />
-    <img src="IMAGES/Fractal_Flame_2024-12-13_16-40-09.JPEG" width="500" />
+    <img src="IMAGES/Fractal_Flame_2024-12-11_16-01-13.JPEG" width="650" />
+    <img src="IMAGES/Fractal_Flame_2024-12-13_16-40-09.JPEG" width="650" />
 </div>
 <div style="display: flex; justify-content: center;">
-    <img src="IMAGES/Fractal_Flame_2024-12-13_16-56-07.JPEG" width="500" />
-    <img src="IMAGES/Fractal_Flame_2024-12-13_16-57-53.JPEG" width="500" />
+    <img src="IMAGES/Fractal_Flame_2024-12-13_16-56-07.JPEG" width="650" />
+    <img src="IMAGES/Fractal_Flame_2024-12-13_16-57-53.JPEG" width="650" />
 </div>
 <div style="display: flex; justify-content: center;">
-    <img src="IMAGES/photo_2_2024-12-04_23-59-28.jpg" width="500" />
-    <img src="IMAGES/photo_5_2024-12-04_23-59-28.jpg" width="500" />
+    <img src="IMAGES/photo_2_2024-12-04_23-59-28.jpg" width="650" />
+    <img src="IMAGES/photo_5_2024-12-04_23-59-28.jpg" width="650" />
 </div>
 
 ***
